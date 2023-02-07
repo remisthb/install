@@ -7,8 +7,8 @@ cryptdrive="${drive}2"
 swap="2G"
 micro="amd-ucode" 
 sgdisk -Zo "$cryptdrive"
-sgdisk -n 1:2048:+512M -t 1:ef00 -c 1:Boot "$drive"
-sgdisk -n 2:0:0 -t 2:8300 -c 2:Root "$drive"
+sgdisk -n 1:2048:+512M -t 1:ef00 -c 1:boot "$drive"
+sgdisk -n 2:0:0 -t 2:8300 -c 2:root "$drive"
 cryptsetup luksFormat "$cryptdrive"
 cryptsetup open --type plain -d /dev/urandom "$cryptdrive" crypt
 dd if=/dev/zero of=/dev/mapper/crypt status=progress 
