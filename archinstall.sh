@@ -27,4 +27,5 @@ swapon /dev/MyVolGroup/swap
 mount --mkdir "$bootdrive" /mnt/boot
 reflector --country US --age 24 --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap -K /mnt base base-devel git linux linux-firmware iwd vim lvm2 "$micro" 
+genfstab -U /mnt >> /mnt/etc/fstab
 
