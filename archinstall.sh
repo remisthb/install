@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/zsh
 user="hunter"
 host="arch"
 drive="/dev/sda"
@@ -27,7 +27,7 @@ mount /dev/MyVolGroup/root /mnt
 swapon /dev/MyVolGroup/swap 
 mount --mkdir "$bootdrive" /mnt/boot
 reflector --country US --age 24 --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-pacstrap -K /mnt base base-devel git linux linux-firmware iwd vim lvm2 "$micro" 
+pacstrap -K /mnt base base-devel git linux linux-firmware iwd vim lvm2 "$micro" sudo xorg-server xorg-xinit dhcpcd 
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 sed -i "/^HOOKS=/c\HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block lvm2 encrypt filesystems fsck)/" /etc/mkinitcpio.conf
@@ -37,9 +37,9 @@ sed -i '/en_US.UTF-8 UTF-8/s/^#//' /etc/locale.gen
 echo "LANG=en_US.UTF-8" | tee /etc/locale.conf
 echo "$host" | tee /etc/hostname 
 mkinitcpio -P
-#bootloader
 bootctl install
 printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" | tee /boot/loader/loader.conf
 printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd "$micro".img\ninitrd  /initramfs-linux.img\noptions cryptdevice=UUID="$cryptdrive":crypt root=/dev/MyVolGroup/root" |tee /boot/loader/entries/arch.conf
 passwd
-
+useradd -m -G wheel "$user"
+passwd "$user"
