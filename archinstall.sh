@@ -39,6 +39,7 @@ echo "$host" | tee /etc/hostname
 mkinitcpio -P
 #bootloader
 bootctl install
-#cryptdevice=UUID="$cryptdrive":crypt root=/dev/MyVolGroup/root
+printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" | tee /boot/loader/loader.conf
+printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd "$micro".img\ninitrd  /initramfs-linux.img\noptions cryptdevice=UUID="$cryptdrive":crypt root=/dev/MyVolGroup/root" |tee /boot/loader/entries/arch.conf
 passwd
 
