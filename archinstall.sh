@@ -33,4 +33,12 @@ arch-chroot /mnt
 sed -i "/^HOOKS=/c\HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block lvm2 encrypt filesystems fsck)/" /etc/mkinitcpio.conf
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc
+sed -i '/en_US.UTF-8 UTF-8/s/^#//' /etc/locale.gen
+echo "LANG=en_US.UTF-8" | tee /etc/locale.conf
+echo "$host" | tee /etc/hostname 
+mkinitcpio -P
+#bootloader
+bootctl install
+#cryptdevice=UUID="$cryptdrive":crypt root=/dev/MyVolGroup/root
+passwd
 
