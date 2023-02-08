@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/sh
 user="hunter"
 host="arch"
 drive="/dev/sda"
@@ -17,7 +17,7 @@ if [[ $1 == setupchroot ]]
     mkinitcpio -P
     bootctl install
     printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" | tee /boot/loader/loader.conf
-    printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice=UUID="$cryptdrive":crypt root=/dev/MyVolGroup/root" |tee /boot/loader/entries/arch.conf
+    printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" |tee /boot/loader/entries/arch.conf
     passwd
     useradd -m -G wheel "$user"
     passwd "$user"
