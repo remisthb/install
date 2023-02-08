@@ -6,13 +6,14 @@ bootdrive="${drive}1"
 cryptdrive="${drive}2"
 swap="2G"
 micro="amd-ucode" 
+cryptsetup luksFormat "$drive"
+cryptsetup open --type plain -d /dev/urandom "$drive" crypt
+dd if=/dev/zero of=/dev/mapper/crypt status=progress 
+cryptsetup close crypt
 sgdisk -Zo "$cryptdrive"
 sgdisk -n 1:2048:+512M -t 1:ef00 -c 1:boot "$drive"
 sgdisk -n 2:0:0 -t 2:8300 -c 2:root "$drive"
 cryptsetup luksFormat "$cryptdrive"
-cryptsetup open --type plain -d /dev/urandom "$cryptdrive" crypt
-dd if=/dev/zero of=/dev/mapper/crypt status=progress 
-cryptsetup close crypt
 cryptsetup open "$cryptdrive" crypt
 pvcreate /dev/mapper/crypt
 vgcreate MyVolGroup /dev/mapper/crypt
