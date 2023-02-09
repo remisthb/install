@@ -7,6 +7,7 @@ cryptdrive="${drive}2"
 swap="2G"
 micro="amd-ucode" 
 network="dhcpcd"
+xinit="xrandr -s 1280x720 &\n~/.fehbg &\nexec dwm"
 netenable() {
 	sudo systemctl start dhcpcd.service 
 	sudo systemctl enable dhcpcd.service	
@@ -23,8 +24,10 @@ if [[ $1 == setupchroot ]]
     bootctl install
     printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" | tee /boot/loader/loader.conf
     printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" |tee /boot/loader/entries/arch.conf
+    echo "Set root password"
     passwd
     useradd -m -G wheel "$user"
+    echo "Set user password"
     passwd "$user"
     netenable  
     mkdir /home/"$user"/repos
@@ -34,9 +37,13 @@ if [[ $1 == setupchroot ]]
     git clone https://github.com/remisthb/dmenu
     git clone https://github.com/remisthb/install
     git clone https://github.com/remisthb/main
+    cp /etc/X11/xinit/xinitrc /home/"$user"/.xinitrc
+    echo "$xinit" | tee -a /home/"$user"/.xinitrc
+    rm /root/archinstall.sh
     exit
     reboot
   else
+    echo "setup for wipe"
     sgdisk -Zo "$drive"
     cryptsetup luksFormat "$drive"
     cryptsetup open --type plain -d /dev/urandom "$drive" crypt
@@ -44,7 +51,9 @@ if [[ $1 == setupchroot ]]
     cryptsetup close crypt
     sgdisk -n 1:2048:+512M -t 1:ef00 -c 1:boot "$drive"
     sgdisk -n 2:0:0 -t 2:8300 -c 2:root "$drive"
+    echo "Choose drive encryption password"
     cryptsetup luksFormat "$cryptdrive"
+    echo "Open drive with encryption password"
     cryptsetup open "$cryptdrive" crypt
     pvcreate /dev/mapper/crypt
     vgcreate MyVolGroup /dev/mapper/crypt
