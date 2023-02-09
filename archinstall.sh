@@ -38,17 +38,12 @@ if [[ $1 == setupchroot ]]
     git clone https://github.com/remisthb/install
     git clone https://github.com/remisthb/main
     cp /etc/X11/xinit/xinitrc /home/"$user"/.xinitrc
-    echo "$xinit" | tee -a /home/"$user"/.xinitrc
+    print {"$xinit"} | tee -a /home/"$user"/.xinitrc
     rm /root/archinstall.sh
     exit
     reboot
   else
     echo "setup for wipe"
-    sgdisk -Zo "$drive"
-    cryptsetup luksFormat "$drive"
-    cryptsetup open --type plain -d /dev/urandom "$drive" crypt
-    dd if=/dev/zero of=/dev/mapper/crypt status=progress 
-    cryptsetup close crypt
     sgdisk -n 1:2048:+512M -t 1:ef00 -c 1:boot "$drive"
     sgdisk -n 2:0:0 -t 2:8300 -c 2:root "$drive"
     echo "Choose drive encryption password"
