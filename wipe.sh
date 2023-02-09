@@ -1,4 +1,5 @@
 #!/bin/sh
+drive="/dev/sda"
 sgdisk -Zo "$drive"
 cryptsetup luksFormat "$drive"
 cryptsetup open --type plain -d /dev/urandom "$drive" crypt
