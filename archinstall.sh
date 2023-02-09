@@ -4,7 +4,7 @@ host="arch"
 drive="/dev/sda"
 bootdrive="${drive}1"
 cryptdrive="${drive}2"
-swap="2G"
+swap="1G"
 micro="amd-ucode" 
 network="dhcpcd"
 xinit="xrandr -s 1280x720 &\n~/.fehbg &\nexec dwm"
@@ -36,7 +36,7 @@ if [[ $1 == setupchroot ]]
     cp /etc/X11/xinit/xinitrc /home/"$user"/.xinitrc
     tail -n 8 /home/"$user"/.xinitrc | wc -c | xargs -I {} truncate /home/"$user"/.xinitrc -s -{}
     print {"$xinit"} | tee -a /home/"$user"/.xinitrc
-    echo '$user ALL=(ALL:ALL) ALL' | EDITOR='tee -a' visudo 
+    echo ""$user" ALL=(ALL:ALL) ALL" | EDITOR='tee -a' visudo 
     rm /root/archinstall.sh
     exit
   else
