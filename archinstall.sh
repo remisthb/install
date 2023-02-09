@@ -34,9 +34,10 @@ if [[ $1 == setupchroot ]]
     cd /home/"$user"/repos
     git clone https://github.com/remisthb/install
     cp /etc/X11/xinit/xinitrc /home/"$user"/.xinitrc
-    tail -n 8 /home/"$user"/.xinitrc | wc -c | xargs -I {} truncate /home/"$user"/.xinitrc -s -{}
-    print {"$xinit"} | tee -a /home/"$user"/.xinitrc
+    tail -n 6 /home/"$user"/.xinitrc | wc -c | xargs -I {} truncate /home/"$user"/.xinitrc -s -{}
+    printf "$xinit" | tee -a /home/"$user"/.xinitrc
     echo ""$user" ALL=(ALL:ALL) ALL" | EDITOR='tee -a' visudo 
+    chown -R "$user" /home/"$user"/repos
     rm /root/archinstall.sh
     exit
   else
