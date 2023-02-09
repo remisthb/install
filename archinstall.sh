@@ -49,3 +49,4 @@ if [[ $1 == setupchroot ]]
     cp archinstall.sh /mnt/root/archinstall.sh
     chmod +x /mnt/root/archinstall.sh
     arch-chroot /mnt /root/archinstall.sh setupchroot
+fi
