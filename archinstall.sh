@@ -6,6 +6,7 @@ bootdrive="${drive}1"
 cryptdrive="${drive}2"
 swap="2G"
 micro="amd-ucode" 
+network="dhcpcd"
 if [[ $1 == setupchroot ]]
   then
     sed -i "/^HOOKS=/c\HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block lvm2 encrypt filesystems fsck)" /etc/mkinitcpio.conf
@@ -44,7 +45,7 @@ if [[ $1 == setupchroot ]]
     swapon /dev/MyVolGroup/swap 
     mount --mkdir "$bootdrive" /mnt/boot
     reflector --country US --age 24 --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-    pacstrap -K /mnt base base-devel git linux linux-firmware iwd vim lvm2 "$micro" sudo xorg-server xorg-xinit dhcpcd 
+    pacstrap -K /mnt base base-devel git linux linux-firmware vim lvm2 "$micro" sudo xorg-server xorg-xinit xorg-xsetroot "$network" 
     genfstab -U /mnt >> /mnt/etc/fstab
     cp archinstall.sh /mnt/root/archinstall.sh
     chmod +x /mnt/root/archinstall.sh
