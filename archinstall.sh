@@ -32,18 +32,15 @@ if [[ $1 == setupchroot ]]
     netenable  
     mkdir /home/"$user"/repos
     cd /home/"$user"/repos
-    git clone https://github.com/remisthb/dwm
-    git clone https://github.com/remisthb/st
-    git clone https://github.com/remisthb/dmenu
     git clone https://github.com/remisthb/install
-    git clone https://github.com/remisthb/main
     cp /etc/X11/xinit/xinitrc /home/"$user"/.xinitrc
+    tail -n 8 /home/"$user"/.xinitrc | wc -c | xargs -I {} truncate /home/"$user"/.xinitrc -s -{}
     print {"$xinit"} | tee -a /home/"$user"/.xinitrc
+    echo '$user ALL=(ALL:ALL) ALL' | EDITOR='tee -a' visudo 
     rm /root/archinstall.sh
     exit
-    reboot
   else
-    echo "setup for wipe"
+    echo "Setup for wipe"
     sgdisk -n 1:2048:+512M -t 1:ef00 -c 1:boot "$drive"
     sgdisk -n 2:0:0 -t 2:8300 -c 2:root "$drive"
     echo "Choose drive encryption password"
