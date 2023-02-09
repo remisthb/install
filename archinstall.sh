@@ -8,7 +8,8 @@ swap="2G"
 micro="amd-ucode" 
 network="dhcpcd"
 netenable() {
-	sudo systemctl start dhcpcd.service; sudo systemctl enable dhcpcd.service	
+	sudo systemctl start dhcpcd.service 
+	sudo systemctl enable dhcpcd.service	
 }
 if [[ $1 == setupchroot ]]
   then
@@ -26,14 +27,21 @@ if [[ $1 == setupchroot ]]
     useradd -m -G wheel "$user"
     passwd "$user"
     netenable  
+    mkdir /home/"$user"/repos
+    cd /home/"$user"/repos
+    git clone https://github.com/remisthb/dwm
+    git clone https://github.com/remisthb/st
+    git clone https://github.com/remisthb/dmenu
+    git clone https://github.com/remisthb/install
+    git clone https://github.com/remisthb/main
     exit
     reboot
   else
-    #sgdisk -Zo "$drive"
-    #cryptsetup luksFormat "$drive"
-    #cryptsetup open --type plain -d /dev/urandom "$drive" crypt
-    #dd if=/dev/zero of=/dev/mapper/crypt status=progress 
-    #cryptsetup close crypt
+    sgdisk -Zo "$drive"
+    cryptsetup luksFormat "$drive"
+    cryptsetup open --type plain -d /dev/urandom "$drive" crypt
+    dd if=/dev/zero of=/dev/mapper/crypt status=progress 
+    cryptsetup close crypt
     sgdisk -n 1:2048:+512M -t 1:ef00 -c 1:boot "$drive"
     sgdisk -n 2:0:0 -t 2:8300 -c 2:root "$drive"
     cryptsetup luksFormat "$cryptdrive"
