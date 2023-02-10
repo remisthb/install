@@ -5,6 +5,7 @@ sudo pacman -S firefox xclip ranger picom pcmanfm p7zip openssh neofetch mpv man
 #sudo pacman -S i3 polybar
 #sudo pacman -S firefox qbittorrent
 cd ~/repos
+git clone https://github.com/remisthb/main
 git clone https://github.com/remisthb/dwm
 git clone https://github.com/remisthb/dmenu
 git clone https://github.com/remisthb/st
@@ -14,3 +15,7 @@ cd ~/repos/dmenu
 sudo make clean install
 cd ~/repos/st
 sudo make clean install
+rm ~/.bashrc
+cp ~/repos/main/.bashrc ~/
+cp ~/repos/main/.vimrc ~/
+cp -a  ~/repos/main/.config ~/
