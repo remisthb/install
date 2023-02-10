@@ -19,3 +19,4 @@ rm ~/.bashrc
 cp ~/repos/main/.bashrc ~/
 cp ~/repos/main/.vimrc ~/
 cp -a  ~/repos/main/.config ~/
+rm -drf ~/repos/main
