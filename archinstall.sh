@@ -20,6 +20,7 @@ if [[ $1 == setupchroot ]]
     sed -i '/en_US.UTF-8 UTF-8/s/^#//' /etc/locale.gen
     echo "LANG=en_US.UTF-8" | tee /etc/locale.conf
     echo "$host" | tee /etc/hostname 
+    locale-gen
     mkinitcpio -P
     bootctl install
     printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" | tee /boot/loader/loader.conf
