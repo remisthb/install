@@ -7,7 +7,7 @@ cryptdrive="${drive}2"
 swap="1G"
 micro="amd-ucode" 
 network="dhcpcd"
-xinit="xrandr -s 1280x720 &\n~/.fehbg &\nexec dwm"
+xinit="dwmblocks &\nxrandr -s 1280x720 &\n~/.fehbg &\nexec dwm"
 netenable() {
 	sudo systemctl start dhcpcd.service 
 	sudo systemctl enable dhcpcd.service	
