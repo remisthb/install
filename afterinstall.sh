@@ -9,12 +9,19 @@ git clone https://github.com/remisthb/main
 git clone https://github.com/remisthb/dwm
 git clone https://github.com/remisthb/dmenu
 git clone https://github.com/remisthb/st
+git clone https://github.com/remisthb/dwmblocks
 cd ~/repos/dwm
-sudo make clean install
+make clean
+sudo make install
 cd ~/repos/dmenu
-sudo make clean install
+make clean
+sudo make install
 cd ~/repos/st
-sudo make clean install
+make clean
+sudo make install
+cd ~/repos/dwmblocks
+make clean
+sudo make install
 rm ~/.bashrc
 cp ~/repos/main/.bashrc ~/
 cp ~/repos/main/.vimrc ~/
