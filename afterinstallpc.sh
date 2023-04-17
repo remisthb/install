@@ -6,6 +6,7 @@ git clone https://github.com/remisthb/main
 git clone https://github.com/remisthb/dwm
 git clone https://github.com/remisthb/dmenu
 git clone https://github.com/remisthb/st
+git clone https://github.com/remisthb/dwmblocks
 cd ~/repos/dwm
 sudo make clean
 sudo make install
@@ -13,6 +14,9 @@ cd ~/repos/dmenu
 sudo make clean
 sudo make install
 cd ~/repos/st
+sudo make clean
+sudo make install
+cd ~/repos/dwmblocks
 sudo make clean
 sudo make install
 rm ~/.bashrc
