@@ -7,6 +7,7 @@ git clone https://github.com/remisthb/dwm
 git clone https://github.com/remisthb/dmenu
 git clone https://github.com/remisthb/st
 git clone https://github.com/remisthb/dwmblocks
+git clone https://aur.archlinux.org/yay-bin.git
 cd ~/repos/dwm
 sudo make clean
 sudo make install
@@ -19,7 +20,9 @@ sudo make install
 cd ~/repos/dwmblocks
 sudo make clean
 sudo make install
-rm ~/.bashrc
+cd ~/repos/yay-bin
+makepkg -si
+sudo rm ~/.bashrc
 cp ~/repos/main/.bashrc ~/
 cp ~/repos/main/.vimrc ~/
 cp -a  ~/repos/main/.config ~/
