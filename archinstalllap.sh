@@ -7,9 +7,10 @@ cryptdrive="${drive}p2"
 swap="1G"
 micro="amd-ucode" 
 network="iwd openresolv"
-xinit="~/.fehbg &\nexec dwm"
+xinit="dwmblocks &\n~/.fehbg &\nexec dwm"
 netenable() {
 	sudo systemctl enable iwd.service	
+	sudo systemctl enable systemd-timesyncd.service
 }
 if [[ $1 == setupchroot ]]
   then
@@ -64,7 +65,7 @@ if [[ $1 == setupchroot ]]
     mount --mkdir "$bootdrive" /mnt/boot
     pacstrap -K /mnt base base-devel git linux linux-firmware vim lvm2 "$micro" sudo xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama ttf-jetbrains-mono-nerd "$network" 
     genfstab -U /mnt >> /mnt/etc/fstab
-    cp archinstall.sh /mnt/root/archinstall.sh
+    cp archinstalllap.sh /mnt/root/archinstall.sh
     chmod +x /mnt/root/archinstall.sh
     arch-chroot /mnt /root/archinstall.sh setupchroot
 fi
