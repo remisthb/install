@@ -27,6 +27,7 @@ if [[ $1 == setupchroot ]]
     printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" |tee /boot/loader/entries/arch.conf
     printf "[General]\nEnableNetworkConfiguration=True\n[Network]\nNameResolvingService=resolvconf" | tee /etc/iwd/main.conf
     printf "[IPv4]\nAddress=192.168.1.135\nNetmask=255.255.255.0\nGateway=192.168.1.1" | tee /var/lib/iwd/NETGEAR70-5G
+    printf 'Section "InputClass"\n\tIdentifier "touchpad"\n\tDriver "libinput"\n\tMatchIsTouchpad "on"\n\tOption "Tapping" "on"\n\tOption "TappingButtonMap" "lrm"\nEndSection' | tee /etc/X11/xorg.conf.d/30-touchpad.conf
     echo "Set root password"
     passwd
     useradd -m -G wheel "$user"
