@@ -6,7 +6,7 @@ bootdrive="${drive}p1"
 cryptdrive="${drive}p2"
 swap="1G"
 micro="amd-ucode" 
-network="iwd openresolv"
+network="iwd"
 xinit="dwmblocks &\n~/.fehbg &\nexec dwm"
 netenable() {
 	sudo systemctl enable iwd.service	
@@ -26,7 +26,7 @@ if [[ $1 == setupchroot ]]
     printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" | tee /boot/loader/loader.conf
     printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" |tee /boot/loader/entries/arch.conf
     printf "[General]\nEnableNetworkConfiguration=True\n[Network]\nNameResolvingService=resolvconf" | tee /etc/iwd/main.conf
-    printf "[IPv4]\nAddress=192.168.1.135\nNetmask=255.255.255.0\nGateway=192.168.1.1" | tee /var/lib/iwd/NETGEAR70-5G
+    printf "[IPv4]\nAddress=192.168.1.135\nNetmask=255.255.255.0\nGateway=192.168.1.1" | tee /var/lib/iwd/NETGEAR70-5G.psk
     printf 'Section "InputClass"\n\tIdentifier "touchpad"\n\tDriver "libinput"\n\tMatchIsTouchpad "on"\n\tOption "Tapping" "on"\n\tOption "TappingButtonMap" "lrm"\nEndSection' | tee /etc/X11/xorg.conf.d/30-touchpad.conf
     echo "Set root password"
     passwd
@@ -64,7 +64,7 @@ if [[ $1 == setupchroot ]]
     mount /dev/MyVolGroup/root /mnt
     swapon /dev/MyVolGroup/swap 
     mount --mkdir "$bootdrive" /mnt/boot
-    pacstrap -K /mnt base base-devel git linux linux-firmware vim lvm2 "$micro" sudo xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama ttf-jetbrains-mono-nerd "$network" 
+    pacstrap -K /mnt base base-devel git linux linux-firmware vim lvm2 "$micro" sudo xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama ttf-jetbrains-mono-nerd "$network" openresolv 
     genfstab -U /mnt >> /mnt/etc/fstab
     cp archinstalllap.sh /mnt/root/archinstall.sh
     chmod +x /mnt/root/archinstall.sh
