@@ -25,6 +25,8 @@ if [[ $1 == setupchroot ]]
     bootctl install
     printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" > /boot/loader/loader.conf
     printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" > /boot/loader/entries/arch.conf
+    mkdir /etc/iwd
+    mkdir /var/lib/iwd
     printf "[General]\nEnableNetworkConfiguration=True\n[Network]\nNameResolvingService=resolvconf" > /etc/iwd/main.conf
     printf "[IPv4]\nAddress=192.168.1.135\nNetmask=255.255.255.0\nGateway=192.168.1.1" > /var/lib/iwd/NETGEAR70-5G.psk
     printf 'Section "InputClass"\n\tIdentifier "touchpad"\n\tDriver "libinput"\n\tMatchIsTouchpad "on"\n\tOption "Tapping" "on"\n\tOption "TappingButtonMap" "lrm"\nEndSection' > /etc/X11/xorg.conf.d/30-touchpad.conf
