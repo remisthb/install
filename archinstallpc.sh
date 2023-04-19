@@ -29,6 +29,8 @@ if [[ $1 == setupchroot ]]
     mkdir /var/lib/iwd
     printf "[General]\nEnableNetworkConfiguration=True\n[Network]\nNameResolvingService=resolvconf" > /etc/iwd/main.conf
     printf "[IPv4]\nAddress=192.168.1.136\nNetmask=255.255.255.0\nGateway=192.168.1.1" > /var/lib/iwd/NETGEAR70.psk
+    resolvconf -u
+    printf 'name_servers="1.1.1.1"' > /etc/resolvconf.conf
     echo "Set root password"
     passwd
     useradd -m -G wheel "$user"

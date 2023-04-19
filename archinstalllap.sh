@@ -30,6 +30,8 @@ if [[ $1 == setupchroot ]]
     printf "[General]\nEnableNetworkConfiguration=True\n[Network]\nNameResolvingService=resolvconf" > /etc/iwd/main.conf
     printf "[IPv4]\nAddress=192.168.1.135\nNetmask=255.255.255.0\nGateway=192.168.1.1" > /var/lib/iwd/NETGEAR70-5G.psk
     printf 'Section "InputClass"\n\tIdentifier "touchpad"\n\tDriver "libinput"\n\tMatchIsTouchpad "on"\n\tOption "Tapping" "on"\n\tOption "TappingButtonMap" "lrm"\nEndSection' > /etc/X11/xorg.conf.d/30-touchpad.conf
+    resolvconf -u
+    printf 'name_servers="1.1.1.1"' > /etc/resolvconf.conf
     echo "Set root password"
     passwd
     useradd -m -G wheel "$user"
