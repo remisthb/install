@@ -25,6 +25,8 @@ if [[ $1 == setupchroot ]]
     bootctl install
     printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" > /boot/loader/loader.conf
     printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" > /boot/loader/entries/arch.conf
+    touch /etc/iwd/main.conf
+    touch /var/lib/iwd/NETGEAR70.psk
     printf "[General]\nEnableNetworkConfiguration=True\n[Network]\nNameResolvingService=resolvconf" > /etc/iwd/main.conf
     printf "[IPv4]\nAddress=192.168.1.136\nNetmask=255.255.255.0\nGateway=192.168.1.1" > /var/lib/iwd/NETGEAR70.psk
     echo "Set root password"
