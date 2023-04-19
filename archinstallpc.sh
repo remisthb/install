@@ -23,8 +23,8 @@ if [[ $1 == setupchroot ]]
     locale-gen
     mkinitcpio -P
     bootctl install
-    printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" | tee /boot/loader/loader.conf
-    printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" | tee /boot/loader/entries/arch.conf
+    printf "default arch.conf\ntimeout 4\nconsole-mode max\neditor no" > /boot/loader/loader.conf
+    printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /"$micro".img\ninitrd /initramfs-linux.img\noptions cryptdevice="$cryptdrive":crypt root=/dev/MyVolGroup/root" > /boot/loader/entries/arch.conf
     printf "[General]\nEnableNetworkConfiguration=True\n[Network]\nNameResolvingService=resolvconf" > /etc/iwd/main.conf
     printf "[IPv4]\nAddress=192.168.1.136\nNetmask=255.255.255.0\nGateway=192.168.1.1" > /var/lib/iwd/NETGEAR70.psk
     echo "Set root password"
@@ -63,7 +63,6 @@ if [[ $1 == setupchroot ]]
     mount /dev/MyVolGroup/root /mnt
     swapon /dev/MyVolGroup/swap 
     mount --mkdir "$bootdrive" /mnt/boot
-    reflector --country US --protocol https --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
     pacstrap -K /mnt base base-devel git linux linux-firmware vim lvm2 "$micro" sudo xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama ttf-jetbrains-mono-nerd "$network" openresolv 
     genfstab -U /mnt >> /mnt/etc/fstab
     cp archinstallpc.sh /mnt/root/archinstall.sh
