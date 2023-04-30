@@ -67,7 +67,7 @@ if [[ $1 == setupchroot ]]
     mount /dev/MyVolGroup/root /mnt
     swapon /dev/MyVolGroup/swap 
     mount --mkdir "$bootdrive" /mnt/boot
-    pacstrap -K /mnt base base-devel git linux linux-firmware vim lvm2 "$micro" sudo xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama ttf-jetbrains-mono-nerd "$network" openresolv alsa-utils 
+    pacstrap -K /mnt base base-devel git linux linux-firmware vim lvm2 "$micro" sudo xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama ttf-jetbrains-mono-nerd "$network" openresolv pulseaudio pavucontrol 
     genfstab -U /mnt >> /mnt/etc/fstab
     cp archinstallpc.sh /mnt/root/archinstall.sh
     chmod +x /mnt/root/archinstall.sh
