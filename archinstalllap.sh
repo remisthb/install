@@ -5,7 +5,7 @@ drive="/dev/mmcblk0"
 bootdrive="${drive}p1"
 cryptdrive="${drive}p2"
 swap="1G"
-micro="amd-ucode" 
+micro="intel-ucode" 
 network="iwd"
 xinit="dwmblocks &\n~/.fehbg &\nexec dwm"
 netenable() {
